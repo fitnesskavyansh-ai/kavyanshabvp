@@ -15,7 +15,6 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { MobileBottomBar } from './components/MobileBottomBar';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
-import { PhotoUploadModal } from './components/PhotoUploadModal';
 import { PolicyModals } from './components/PolicyModals';
 import { IssueSubmittedPage } from './components/IssueSubmittedPage';
 import { CheckCircle2, AlertCircle, Info } from 'lucide-react';
@@ -106,7 +105,6 @@ const MainContent: React.FC = () => {
 
       {/* Overlays and Modals */}
       <AdminDashboardModal />
-      <PhotoUploadModal />
       <PolicyModals />
       <ToastNotification />
     </div>
