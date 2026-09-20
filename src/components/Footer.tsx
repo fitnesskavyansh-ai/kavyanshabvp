@@ -22,32 +22,27 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="relative bg-white text-slate-600 border-t border-orange-200 text-xs overflow-hidden">
-      {/* Subtle ABVP Watermark in Footer Corner */}
-      <div className="absolute -bottom-10 -right-10 w-64 h-64 sm:w-80 sm:h-80 pointer-events-none select-none opacity-15 sm:opacity-20 z-0">
-        <img src="/abvp-logo.png" alt="ABVP Watermark" className="w-full h-full object-contain rotate-12 filter drop-shadow-[0_0_35px_rgba(249,115,22,0.25)]" />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
           {/* Col 1: Identity */}
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="relative w-12 h-12 rounded-full bg-orange-50 border-2 border-orange-500 shadow-sm flex items-center justify-center p-0.5 flex-shrink-0">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-orange-500 shadow-sm flex items-center justify-center flex-shrink-0 bg-white ring-2 ring-orange-100">
                 <img
-                  src="/abvp-logo.png"
-                  alt="ABVP Official Emblem"
-                  className="w-full h-full object-contain rounded-full"
+                  src={profile.photoUrl || '/kavyansh-kayastha.jpg'}
+                  alt={profile.name}
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               <div>
-                <h3 className="text-base font-black text-slate-900 leading-tight">
-                  {profile.name}
+                <h3 className="text-base font-black text-slate-900 leading-tight font-hindi">
+                  काव्यांश कायस्थ
                 </h3>
-                <p className="text-xs text-orange-600 font-bold">
-                  {profile.role}
+                <p className="text-xs text-orange-600 font-bold font-hindi">
+                  {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
                 </p>
-                <p className="text-[11px] text-slate-500 font-medium">
-                  {profile.organisation}
+                <p className="text-[11px] text-slate-500 font-medium font-hindi">
+                  अखिल भारतीय विद्यार्थी परिषद (ABVP)
                 </p>
               </div>
             </div>
@@ -65,7 +60,7 @@ export const Footer: React.FC = () => {
                 <div className="w-5 h-5 rounded-md bg-orange-100 flex items-center justify-center text-orange-600 flex-shrink-0">
                   <Phone className="w-3 h-3" />
                 </div>
-                <span>Helpline: {profile.phone || '+91 63950 14760'}</span>
+                <span>Call Kavyansh Kayastha: {profile.phone || '+91 63950 14760'}</span>
               </a>
 
               <a
@@ -189,16 +184,23 @@ export const Footer: React.FC = () => {
               </li>
             </ul>
 
-            <div className="pt-2 text-[11px] text-slate-500 leading-relaxed border-t border-orange-100">
-              Personal portfolio site. Not the official website of Akhil Bharatiya Vidyarthi Parishad.
+            <div className="pt-2 text-[11px] text-slate-500 leading-relaxed border-t border-orange-100 font-hindi">
+              यह काव्यांश कायस्थ की व्यक्तिगत वेबसाइट है। यह ABVP का आधिकारिक पोर्टल नहीं है।
             </div>
           </div>
         </div>
 
+        {/* Official Disclaimer Banner */}
+        <div className="mt-10 p-4 rounded-2xl bg-orange-50/70 border border-orange-200 text-center shadow-xs">
+          <p className="text-xs sm:text-sm text-slate-700 font-hindi leading-relaxed">
+            <strong className="font-bold text-slate-900">अस्वीकरण (Disclaimer):</strong> यह काव्यांश कायस्थ की व्यक्तिगत वेबसाइट है। यह अखिल भारतीय विद्यार्थी परिषद (ABVP) का आधिकारिक पोर्टल नहीं है।
+          </p>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-orange-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[11px] text-slate-500 text-center sm:text-left font-medium">
-            Copyright © {currentYear} {profile.name}. All rights reserved. • Nagar Mantri, Mathura.
+        <div className="mt-8 pt-6 border-t border-orange-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[11px] text-slate-500 text-center sm:text-left font-medium font-hindi">
+            Copyright © {currentYear} काव्यांश कायस्थ. All rights reserved. • नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा (अखिल भारतीय विद्यार्थी परिषद - ABVP).
           </p>
 
           <div className="flex items-center gap-3">

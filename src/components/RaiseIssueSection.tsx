@@ -205,20 +205,11 @@ export const RaiseIssueSection: React.FC = () => {
       {/* Subtle decorative glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-orange-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Official ABVP Emblem Watermark in the Background Corner */}
-      <div className="absolute -top-10 -right-10 sm:top-6 sm:right-8 w-60 h-60 sm:w-80 sm:h-80 pointer-events-none select-none opacity-15 sm:opacity-20 z-0">
-        <img
-          src="/abvp-logo.png"
-          alt="ABVP Official Emblem Watermark"
-          className="w-full h-full object-contain rotate-6 filter drop-shadow-[0_0_35px_rgba(249,115,22,0.3)]"
-        />
-      </div>
-
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 border border-orange-300 text-orange-800 text-xs font-bold mb-3 shadow-xs">
-            <img src="/abvp-logo.png" alt="ABVP" className="w-4 h-4 rounded-full bg-white" />
+            <AlertCircle className="w-4 h-4 text-orange-600" />
             <span>छात्र एवं जन समस्या निवारण मंच • Grievance Portal</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight">

@@ -19,6 +19,7 @@ import {
   Shield,
   ArrowUpRight,
   Lock,
+  ShieldCheck,
   Instagram,
   Facebook,
   Twitter,
@@ -59,11 +60,6 @@ export const AboutSection: React.FC = () => {
 
   return (
     <section id="about" className="py-16 sm:py-20 bg-gradient-to-b from-white via-orange-50/30 to-white border-b border-orange-200/80 relative overflow-hidden">
-      {/* Subtle ABVP Watermark in the Top-Right Corner */}
-      <div className="absolute top-2 right-2 sm:top-4 sm:right-6 w-56 h-56 sm:w-80 sm:h-80 opacity-15 sm:opacity-20 pointer-events-none select-none z-0">
-        <img src="/abvp-logo.png" alt="ABVP Watermark" className="w-full h-full object-contain rotate-6 filter drop-shadow-[0_0_35px_rgba(249,115,22,0.25)]" />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
@@ -74,8 +70,8 @@ export const AboutSection: React.FC = () => {
           <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight">
             Personal & Academic Profile
           </h2>
-          <p className="mt-3 text-base sm:text-lg text-slate-600 font-medium">
-            Dedicated student activist and youth representative serving as Nagar Mantri, Mathura.
+          <p className="mt-3 text-base sm:text-lg text-slate-600 font-medium font-hindi">
+            काव्यांश कायस्थ • नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)
           </p>
         </div>
 
@@ -100,28 +96,23 @@ export const AboutSection: React.FC = () => {
                       className="w-full h-full object-cover object-top rounded-xl"
                     />
 
-                    {/* Official ABVP Seal Stamp Top-Left */}
-                    <div className="absolute top-2 left-2 bg-white/95 p-1 rounded-full shadow-md border border-orange-200">
-                      <img src="/abvp-logo.png" alt="ABVP" className="w-5 h-5 rounded-full" />
-                    </div>
-
-                    {/* Subtle Badge: "Locked & Verified Official Photo" */}
+                    {/* Subtle Badge: "Verified Official Photo" */}
                     <div className="absolute top-2 right-2 bg-slate-950/90 text-emerald-300 px-2 py-0.5 rounded-full text-[9px] font-bold flex items-center gap-1 shadow-xs border border-emerald-500/50">
-                      <Lock className="w-2.5 h-2.5 text-emerald-400" />
-                      <span>Locked & Permanent</span>
+                      <ShieldCheck className="w-2.5 h-2.5 text-emerald-400" />
+                      <span>Official Photo</span>
                     </div>
                   </div>
 
                   {/* Role indicator pill */}
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-orange-600 text-white border border-orange-400 px-3.5 py-0.5 rounded-full text-[11px] font-bold whitespace-nowrap shadow-md">
-                    Nagar Mantri
+                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-orange-600 text-white border border-orange-400 px-3.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold whitespace-nowrap shadow-md font-hindi">
+                    नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा
                   </div>
                 </div>
 
                 {/* Identity Text */}
                 <div className="mt-2 space-y-1">
                   <div className="flex items-center justify-center gap-1.5 flex-wrap">
-                    <h3 className="text-xl sm:text-2xl font-black text-slate-950 tracking-tight">
+                    <h3 className="text-xl sm:text-2xl font-black text-slate-950 tracking-tight font-hindi">
                       {profile.name}
                     </h3>
                   </div>
@@ -129,14 +120,14 @@ export const AboutSection: React.FC = () => {
                     <span>{profile.communitySubtitle || 'कायस्थ'}</span>
                   </div>
 
-                  <p className="text-xs sm:text-sm font-bold text-orange-600 pt-1">
-                    {profile.role}
+                  <p className="text-xs sm:text-sm font-bold text-orange-600 pt-1 font-hindi">
+                    {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
                   </p>
-                  <p className="text-xs text-slate-600 font-medium">
-                    {profile.organisation}
+                  <p className="text-xs text-slate-600 font-medium font-hindi">
+                    {profile.organisation || 'अखिल भारतीय विद्यार्थी परिषद (ABVP)'}
                   </p>
-                  <p className="text-[11px] text-slate-500 font-medium">
-                    {profile.city || 'Mathura, Uttar Pradesh'}
+                  <p className="text-[11px] text-slate-500 font-medium font-hindi">
+                    मथुरा, उत्तर प्रदेश
                   </p>
                 </div>
               </div>
@@ -157,7 +148,7 @@ export const AboutSection: React.FC = () => {
                   className="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-orange-50 text-slate-700 border border-orange-200 font-bold text-xs py-2 px-3 rounded-xl transition shadow-xs"
                 >
                   <Phone className="w-3.5 h-3.5 text-orange-600" />
-                  <span>Call Mathura Office</span>
+                  <span>Call Kavyansh Kayastha</span>
                 </a>
 
                 {/* Social Connect Icons */}
@@ -244,8 +235,8 @@ export const AboutSection: React.FC = () => {
                       </div>
                       <span>Public Role</span>
                     </dt>
-                    <dd className="sm:text-right font-bold text-orange-600 pl-9 sm:pl-0">
-                      {profile.role}
+                    <dd className="sm:text-right font-bold text-orange-600 pl-9 sm:pl-0 font-hindi">
+                      {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
                     </dd>
                   </div>
 
@@ -257,9 +248,8 @@ export const AboutSection: React.FC = () => {
                       </div>
                       <span>Organisation</span>
                     </dt>
-                    <dd className="sm:text-right font-bold text-slate-800 pl-9 sm:pl-0 flex items-center justify-start sm:justify-end gap-1.5">
-                      <img src="/abvp-logo.png" alt="ABVP Emblem" className="w-4 h-4 rounded-full flex-shrink-0 shadow-xs" />
-                      <span>{profile.organisation}</span>
+                    <dd className="sm:text-right font-bold text-slate-800 pl-9 sm:pl-0 flex items-center justify-start sm:justify-end gap-1.5 font-hindi">
+                      <span>{profile.organisation || 'अखिल भारतीय विद्यार्थी परिषद (ABVP)'}</span>
                     </dd>
                   </div>
 

@@ -47,16 +47,10 @@ export const JourneySection: React.FC = () => {
 
   return (
     <section id="journey" className="relative py-16 sm:py-24 bg-gradient-to-b from-[#faf8f5] via-white to-[#faf8f5] border-b border-orange-200/80 overflow-hidden">
-      {/* Subtle ABVP Watermark in the Top-Right Corner */}
-      <div className="absolute -top-10 -right-10 sm:top-6 sm:right-8 w-60 h-60 sm:w-80 sm:h-80 pointer-events-none select-none opacity-15 sm:opacity-20 z-0">
-        <img src="/abvp-logo.png" alt="ABVP Emblem Watermark" className="w-full h-full object-contain rotate-12 filter drop-shadow-[0_0_35px_rgba(249,115,22,0.25)]" />
-      </div>
-
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-900 text-xs font-bold mb-3 border border-orange-300 shadow-xs">
-            <img src="/abvp-logo.png" alt="ABVP" className="w-4 h-4 rounded-full" />
             <span className="font-hindi font-bold">मेरी यात्रा • My Journey</span>
           </div>
 
@@ -165,13 +159,6 @@ export const JourneySection: React.FC = () => {
                                 : 'text-xl sm:text-2xl text-slate-900'
                             }`}
                           >
-                            {isCurrent && (
-                              <img
-                                src="/abvp-logo.png"
-                                alt="ABVP Official Emblem"
-                                className="w-7 h-7 rounded-full shadow-xs flex-shrink-0"
-                              />
-                            )}
                             <span>{item.title}</span>
                             {isCurrent && (
                               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-100 text-orange-900 border border-orange-300 font-sans">

@@ -20,8 +20,8 @@ import {
 export const INITIAL_PROFILE: ProfileConfig = {
   name: 'Kavyansh Kayastha',
   communitySubtitle: 'कायस्थ',
-  role: 'Nagar Mantri, Mathura',
-  organisation: 'Akhil Bharatiya Vidyarthi Parishad (ABVP)',
+  role: 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा',
+  organisation: 'अखिल भारतीय विद्यार्थी परिषद (ABVP)',
   city: 'Mathura, Uttar Pradesh, India',
   hometown: 'Bareilly, Uttar Pradesh, India',
   residence: '[AREA/LOCALITY, MATHURA — ONLY IF I PROVIDE IT]',
@@ -49,7 +49,7 @@ export const INITIAL_PROFILE: ProfileConfig = {
   shortIntro:
     'Students, youth and society ke issues ko sunna, unhe samajhna aur appropriate platform tak pahunchana meri public-service journey ka important part hai.',
   detailedAbout:
-    'Main Kavyansh Kayastha, vartamaan mein Akhil Bharatiya Vidyarthi Parishad ke Nagar Mantri, Mathura ke roop mein student/youth activities mein actively associated hoon. Mera focus students aur young people se jude issues ko sunna, samajhna aur unke appropriate resolution ke liye concerned platform tak pahunchana hai.',
+    'Main Kavyansh Kayastha, vartamaan mein Akhil Bharatiya Vidyarthi Parishad ke नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा ke roop mein student/youth activities mein actively associated hoon. Mera focus students aur young people se jude issues ko sunna, samajhna aur unke appropriate resolution ke liye concerned platform tak pahunchana hai.',
   visionPoints: [
     {
       title: 'Listening to Students (छात्रों की आवाज़)',
@@ -280,19 +280,19 @@ export const INITIAL_FAQS: FAQItem[] = [
     id: 'faq-1',
     question: 'Who is Kavyansh Kayastha?',
     answer:
-      'Kavyansh Kayastha is a student and youth representative serving as Nagar Mantri, Mathura in Akhil Bharatiya Vidyarthi Parishad (ABVP), actively working for student welfare, campus grievance resolution, and positive youth empowerment.',
+      'काव्यांश कायस्थ अखिल भारतीय विद्यार्थी परिषद (ABVP) में नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा के रूप में छात्र कल्याण, समस्या समाधान और सकारात्मक युवा सशक्तिकरण के लिए सक्रिय रूप से कार्यरत हैं।',
   },
   {
     id: 'faq-2',
     question: 'What is his current role?',
     answer:
-      'His current organizational responsibility is Nagar Mantri, Mathura in Akhil Bharatiya Vidyarthi Parishad (ABVP).',
+      'उनका संगठनात्मक दायित्व: नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा (अखिल भारतीय विद्यार्थी परिषद - ABVP)।',
   },
   {
     id: 'faq-3',
     question: 'Where does he work?',
     answer:
-      'He works across educational institutions, campuses, youth centers, and localities within Mathura city and district, Uttar Pradesh.',
+      'वे मथुरा जनपद के चौमुहां, छाता एवं कोसी क्षेत्र के समस्त कॉलेज, विश्वविद्यालय परिसरों और छात्र-छात्राओं के बीच सक्रिय रूप से कार्य करते हैं।',
   },
   {
     id: 'faq-4',

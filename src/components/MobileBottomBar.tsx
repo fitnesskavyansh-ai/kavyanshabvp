@@ -15,10 +15,10 @@ export const MobileBottomBar: React.FC = () => {
         id="mobile-bottom-call-button"
         href={`tel:${profile.phone ? profile.phone.replace(/\s+/g, '') : '6395014760'}`}
         className="flex-1 inline-flex items-center justify-center gap-1.5 bg-orange-50 active:bg-orange-100 text-slate-800 text-xs font-bold py-2.5 rounded-xl border border-orange-200 transition shadow-xs"
-        title="Direct Call Helpline"
+        title="Direct Call - Kavyansh Kayastha"
       >
         <Phone className="w-3.5 h-3.5 text-emerald-600" />
-        <span>Call: 6395014760</span>
+        <span>Call Kavyansh: 6395014760</span>
       </a>
 
       <a

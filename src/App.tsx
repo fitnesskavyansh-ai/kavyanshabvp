@@ -5,7 +5,7 @@ import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
 import { JourneySection } from './components/JourneySection';
 import { ActivitiesSection } from './components/ActivitiesSection';
-import { RaiseIssueSection } from './components/RaiseIssueSection';
+import { StudentComplaintForm } from './components/StudentComplaintForm';
 import { GallerySection } from './components/GallerySection';
 import { UpdatesSection } from './components/UpdatesSection';
 import { VisionSection } from './components/VisionSection';
@@ -46,44 +46,16 @@ const ToastNotification: React.FC = () => {
 const MainContent: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-[#faf8f5] text-slate-900 selection:bg-orange-500 selection:text-white pb-16 md:pb-0 overflow-x-hidden">
-      {/* Full-Page Fixed Transparent ABVP Logo Background Watermark (Center & Corners) */}
+      {/* Clean Ambient Lighting (Strictly no watermarks or logos) */}
       <div
         aria-hidden="true"
-        className="fixed inset-0 pointer-events-none select-none z-0 flex items-center justify-center overflow-hidden"
+        className="fixed inset-0 pointer-events-none select-none z-0 overflow-hidden"
       >
-        {/* 1. Center Giant Watermark */}
-        <div className="w-[360px] h-[360px] sm:w-[560px] sm:h-[560px] lg:w-[760px] lg:h-[760px] opacity-[0.08] sm:opacity-[0.10] transition-all duration-700 filter drop-shadow-[0_0_50px_rgba(249,115,22,0.2)]">
-          <img
-            src="/abvp-logo.png"
-            alt="ABVP Official Emblem Center Watermark"
-            className="w-full h-full object-contain"
-          />
-        </div>
-
-        {/* 2. Top-Right Corner Watermark */}
-        <div className="absolute -top-12 -right-12 sm:-top-16 sm:-right-16 w-56 h-56 sm:w-72 sm:h-72 lg:w-88 lg:h-88 opacity-[0.09] sm:opacity-[0.12] rotate-12">
-          <img
-            src="/abvp-logo.png"
-            alt="ABVP Emblem Top Corner Watermark"
-            className="w-full h-full object-contain filter drop-shadow-[0_0_30px_rgba(249,115,22,0.2)]"
-          />
-        </div>
-
-        {/* 3. Bottom-Left Corner Watermark */}
-        <div className="absolute -bottom-12 -left-12 sm:-bottom-16 sm:-left-16 w-56 h-56 sm:w-72 sm:h-72 lg:w-88 lg:h-88 opacity-[0.07] sm:opacity-[0.09] -rotate-12">
-          <img
-            src="/abvp-logo.png"
-            alt="ABVP Emblem Bottom Corner Watermark"
-            className="w-full h-full object-contain filter drop-shadow-[0_0_30px_rgba(249,115,22,0.2)]"
-          />
-        </div>
-
-        {/* Subtle Ambient Saffron & Warm Glows behind page */}
-        <div className="absolute top-10 left-10 w-[500px] h-[500px] bg-orange-400/10 rounded-full blur-[140px]"></div>
-        <div className="absolute bottom-20 right-10 w-[600px] h-[600px] bg-amber-400/10 rounded-full blur-[160px]"></div>
+        <div className="absolute top-10 left-10 w-[500px] h-[500px] bg-orange-400/5 rounded-full blur-[140px]"></div>
+        <div className="absolute bottom-20 right-10 w-[600px] h-[600px] bg-amber-400/5 rounded-full blur-[160px]"></div>
       </div>
 
-      {/* Page Content Layers (rendered cleanly over watermark) */}
+      {/* Page Content Layers */}
       <div className="relative z-10">
         <Navbar />
         <main id="main-content">
@@ -91,7 +63,7 @@ const MainContent: React.FC = () => {
           <AboutSection />
           <JourneySection />
           <ActivitiesSection />
-          <RaiseIssueSection />
+          <StudentComplaintForm />
           <GallerySection />
           <UpdatesSection />
           <VisionSection />

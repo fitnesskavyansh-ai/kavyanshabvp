@@ -76,15 +76,6 @@ export const ContactSection: React.FC = () => {
       {/* Background ambient lighting */}
       <div className="absolute top-10 right-0 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Official ABVP Emblem Watermark */}
-      <div className="absolute -bottom-8 -right-8 sm:bottom-4 sm:right-6 w-60 h-60 sm:w-80 sm:h-80 pointer-events-none select-none opacity-15 sm:opacity-20 z-0">
-        <img
-          src="/abvp-logo.png"
-          alt="ABVP Emblem Watermark"
-          className="w-full h-full object-contain rotate-6 filter drop-shadow-[0_0_35px_rgba(249,115,22,0.25)]"
-        />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -114,14 +105,14 @@ export const ContactSection: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <h4 className="text-base font-black text-slate-900 leading-tight">
-                    {profile.name}
+                  <h4 className="text-base font-black text-slate-900 leading-tight font-hindi">
+                    काव्यांश कायस्थ
                   </h4>
-                  <p className="text-xs font-bold text-orange-600">
-                    {profile.role}
+                  <p className="text-xs font-bold text-orange-600 font-hindi">
+                    {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
                   </p>
-                  <p className="text-[11px] text-slate-500 font-medium">
-                    {profile.organisation} • Mathura
+                  <p className="text-[11px] text-slate-500 font-medium font-hindi">
+                    अखिल भारतीय विद्यार्थी परिषद (ABVP)
                   </p>
                 </div>
               </div>
@@ -177,7 +168,7 @@ export const ContactSection: React.FC = () => {
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs shadow-xs transition"
                           >
                             <Phone className="w-3.5 h-3.5" />
-                            <span>Call Now (कॉल करें)</span>
+                            <span>Call Kavyansh Kayastha (कॉल करें)</span>
                           </a>
 
                           <a

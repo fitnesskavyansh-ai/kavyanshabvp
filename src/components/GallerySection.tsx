@@ -42,15 +42,6 @@ export const GallerySection: React.FC = () => {
       <div className="absolute top-1/3 left-0 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Official ABVP Emblem Watermark */}
-      <div className="absolute top-10 -left-10 sm:top-14 sm:left-8 w-60 h-60 sm:w-76 sm:h-76 pointer-events-none select-none opacity-15 sm:opacity-20 z-0">
-        <img
-          src="/abvp-logo.png"
-          alt="ABVP Emblem Watermark"
-          className="w-full h-full object-contain -rotate-6 filter drop-shadow-[0_0_35px_rgba(249,115,22,0.25)]"
-        />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
@@ -137,8 +128,8 @@ export const GallerySection: React.FC = () => {
               </div>
             ) : (
               <div className="mt-8 pt-5 border-t border-orange-100/70">
-                <span className="text-xs text-slate-400 font-medium">
-                  Official Gallery Archive • Nagar Mantri, Mathura
+                <span className="text-xs text-slate-400 font-medium font-hindi">
+                  काव्यांश कायस्थ • नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)
                 </span>
               </div>
             )}
@@ -207,8 +198,8 @@ export const GallerySection: React.FC = () => {
                       <Eye className="w-3.5 h-3.5" />
                       <span>View Full Image</span>
                     </span>
-                    <span className="text-[11px] text-slate-400 font-normal">
-                      Nagar Mantri Archive
+                    <span className="text-[11px] text-slate-500 font-medium font-hindi">
+                      चौमुहां–छाता–कोसी, मथुरा
                     </span>
                   </div>
                 </div>

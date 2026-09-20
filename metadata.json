@@ -1,6 +1,6 @@
 {
   "name": "Nagar Mantri Mathura - ABVP Public Profile",
-  "description": "Official personal portfolio and public contact platform of Kavyansh Kayastha, Nagar Mantri, Mathura, associated with Akhil Bharatiya Vidyarthi Parishad (ABVP).",
+  "description": "काव्यांश कायस्थ • नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -14,11 +14,6 @@ import { INITIAL_RESOURCES } from '../config/profileData';
 export const ResourcesSection: React.FC = () => {
   return (
     <section id="resources" className="relative py-20 bg-gradient-to-b from-[#faf8f5] via-white to-[#faf8f5] border-b border-orange-200/80 overflow-hidden">
-      {/* Subtle ABVP Watermark */}
-      <div className="absolute top-4 left-4 sm:top-8 sm:left-8 w-60 h-60 sm:w-80 sm:h-80 opacity-15 sm:opacity-20 pointer-events-none select-none z-0">
-        <img src="/abvp-logo.png" alt="ABVP Watermark" className="w-full h-full object-contain rotate-[-12deg] filter drop-shadow-[0_0_35px_rgba(249,115,22,0.25)]" />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">

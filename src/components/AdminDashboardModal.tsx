@@ -318,7 +318,7 @@ export const AdminDashboardModal: React.FC = () => {
 
       localStorage.setItem('abvp_admin_token', data.token);
       setAdminToken(data.token);
-      showToast('Welcome Nagar Mantri, Mathura. Admin access authorized.', 'success');
+      showToast('Welcome Kavyansh Kayastha (नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा). Admin access authorized.', 'success');
       setLoginPassword('');
     } catch (err: any) {
       showToast(err.message || 'Invalid credentials', 'error');
@@ -554,7 +554,7 @@ export const AdminDashboardModal: React.FC = () => {
         },
         body: JSON.stringify({
           status: 'Resolved',
-          resolutionNotes: 'Resolved by Nagar Mantri grievance desk on ' + new Date().toLocaleDateString(),
+          resolutionNotes: 'Resolved by Kavyansh Kayastha grievance desk (नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा) on ' + new Date().toLocaleDateString(),
         }),
       });
       showToast('Issue marked as Resolved', 'success');
@@ -634,9 +634,9 @@ export const AdminDashboardModal: React.FC = () => {
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                <span>Nagar Mantri Admin Portal</span>
-                <span className="text-[11px] px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30">
-                  Mathura
+                <span>Kavyansh Kayastha Admin Portal</span>
+                <span className="text-[11px] px-2 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/30 font-hindi">
+                  चौमुहां–छाता–कोसी, मथुरा
                 </span>
               </h3>
               <p className="text-xs text-slate-400">
@@ -1387,9 +1387,6 @@ export const AdminDashboardModal: React.FC = () => {
                               <span className="text-[10px] font-semibold">No Photo</span>
                             </div>
                           )}
-                          <div className="absolute top-1 left-1 bg-slate-900/80 p-0.5 rounded shadow">
-                            <img src="/abvp-logo.png" alt="ABVP" className="w-3.5 h-3.5 rounded-full" />
-                          </div>
                         </div>
 
                         <div className="flex-1 space-y-2 text-xs">
@@ -2414,7 +2411,7 @@ export const AdminDashboardModal: React.FC = () => {
                     type="text"
                     value={updatingAssignedTo}
                     onChange={(e) => setUpdatingAssignedTo(e.target.value)}
-                    placeholder="e.g. Nagar Mantri"
+                    placeholder="e.g. नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा"
                     className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white"
                   />
                 </div>

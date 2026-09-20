@@ -36,15 +36,6 @@ export const VisionSection: React.FC = () => {
       {/* Background ambient lighting */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Official ABVP Emblem Watermark in the Background Corner */}
-      <div className="absolute -top-10 -left-10 sm:top-6 sm:left-8 w-60 h-60 sm:w-80 sm:h-80 pointer-events-none select-none opacity-15 sm:opacity-20 z-0">
-        <img
-          src="/abvp-logo.png"
-          alt="ABVP Official Emblem Watermark"
-          className="w-full h-full object-contain -rotate-6 filter drop-shadow-[0_0_35px_rgba(249,115,22,0.25)]"
-        />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">

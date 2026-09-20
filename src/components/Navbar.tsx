@@ -32,6 +32,7 @@ export const Navbar: React.FC = () => {
     { name: 'About Me', href: '#about' },
     { name: 'My Journey', href: '#journey' },
     { name: 'कार्य व गतिविधियाँ', href: '#activities' },
+    { name: 'शिकायत व सुझाव', href: '#complaint-center' },
     { name: 'Gallery', href: '#gallery' },
     { name: 'Updates', href: '#updates' },
     { name: 'दृष्टिकोण (Vision)', href: '#vision' },
@@ -60,22 +61,17 @@ export const Navbar: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <img
-              src="/abvp-logo.png"
-              alt="ABVP Emblem"
-              className="w-4 h-4 rounded-full shadow-xs flex-shrink-0 bg-white"
-            />
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            <span className="inline-block w-2 h-2 rounded-full bg-white animate-pulse"></span>
             <span>अखिल भारतीय विद्यार्थी परिषद (ABVP) • नगर इकाई मथुरा</span>
           </div>
           <div className="flex items-center gap-3 text-xs font-normal">
             <a
               href="tel:+916395014760"
               className="hidden sm:inline-flex items-center gap-1.5 text-white hover:text-amber-200 font-bold transition bg-black/20 hover:bg-black/35 px-2.5 py-0.5 rounded-md"
-              title="Call Helpline: 6395014760"
+              title="Call Kavyansh Kayastha: 6395014760"
             >
               <PhoneCall className="w-3 h-3 text-amber-300" />
-              <span>Helpline: +91 63950 14760</span>
+              <span>Call: +91 63950 14760</span>
             </a>
 
             {/* Direct Social Links in Top Org Bar */}
@@ -129,24 +125,24 @@ export const Navbar: React.FC = () => {
           <a
             id="brand-logo-link"
             href="#home"
-            className="flex items-center gap-3.5 group focus:outline-none"
+            className="flex items-center gap-2.5 sm:gap-3.5 group focus:outline-none max-w-[80%] sm:max-w-none"
           >
-            <div className="relative w-12 h-12 rounded-full bg-white border-2 border-orange-500 shadow-md flex items-center justify-center p-0.5 flex-shrink-0 group-hover:scale-105 transition-transform ring-2 ring-orange-100">
+            <div className="relative w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white border-2 border-orange-500 shadow-md flex items-center justify-center p-0.5 flex-shrink-0 group-hover:scale-105 transition-transform ring-2 ring-orange-100">
               <img
                 src="/abvp-logo.png"
                 alt="ABVP Official Emblem"
                 className="w-full h-full object-contain rounded-full"
               />
             </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-black text-slate-900 tracking-tight leading-tight group-hover:text-orange-600 transition-colors">
-                {profile.name}
+            <div className="flex flex-col text-left">
+              <span className="text-sm sm:text-base md:text-lg font-black text-slate-900 tracking-tight leading-tight group-hover:text-orange-600 transition-colors font-hindi">
+                काव्यांश कायस्थ
               </span>
-              <span className="text-xs font-bold text-orange-600 leading-tight">
-                {profile.role}
+              <span className="text-[11px] sm:text-xs font-bold text-orange-600 leading-tight font-hindi mt-0.5">
+                नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा
               </span>
-              <span className="text-[11px] text-slate-500 font-medium leading-none mt-0.5">
-                Mathura, Uttar Pradesh
+              <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium leading-tight font-hindi mt-0.5">
+                अखिल भारतीय विद्यार्थी परिषद (ABVP)
               </span>
             </div>
           </a>
@@ -220,14 +216,14 @@ export const Navbar: React.FC = () => {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-black text-slate-900 truncate">
-                {profile.name}
+              <div className="text-sm font-black text-slate-900 truncate font-hindi">
+                काव्यांश कायस्थ
               </div>
-              <div className="text-[11px] font-bold text-orange-600 truncate">
-                {profile.role}
+              <div className="text-[11px] font-bold text-orange-600 truncate font-hindi">
+                {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
               </div>
-              <div className="text-[10px] text-slate-500 truncate">
-                अखिल भारतीय विद्यार्थी परिषद • मथुरा
+              <div className="text-[10px] text-slate-500 truncate font-hindi">
+                अखिल भारतीय विद्यार्थी परिषद (ABVP)
               </div>
             </div>
           </div>
@@ -282,7 +278,7 @@ export const Navbar: React.FC = () => {
               className="w-full flex items-center justify-center gap-2 bg-white hover:bg-orange-50 text-slate-800 font-bold py-2.5 px-4 rounded-xl border border-orange-300 shadow-xs text-sm transition"
             >
               <PhoneCall className="w-4 h-4 text-emerald-600" />
-              <span>Call Helpline: +91 63950 14760</span>
+              <span>Call Kavyansh Kayastha: +91 63950 14760</span>
             </a>
 
             <button

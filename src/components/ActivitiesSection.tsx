@@ -33,15 +33,6 @@ export const ActivitiesSection: React.FC = () => {
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 right-0 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Official ABVP Emblem Watermark */}
-      <div className="absolute top-12 -right-8 sm:top-16 sm:right-6 w-56 h-56 sm:w-72 sm:h-72 pointer-events-none select-none opacity-15 sm:opacity-20 z-0">
-        <img
-          src="/abvp-logo.png"
-          alt="ABVP Emblem Watermark"
-          className="w-full h-full object-contain rotate-6 filter drop-shadow-[0_0_35px_rgba(249,115,22,0.25)]"
-        />
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
@@ -101,13 +92,13 @@ export const ActivitiesSection: React.FC = () => {
               Official activities and verified initiatives will be listed here.
             </p>
 
-            <p className="text-sm text-slate-500 font-medium max-w-md mx-auto leading-relaxed">
-              Activities and student support milestones are published only after genuine verification by Kavyansh Kayastha (Nagar Mantri, Mathura).
+            <p className="text-sm text-slate-500 font-medium max-w-md mx-auto leading-relaxed font-hindi">
+              गतिविधियाँ एवं छात्र कल्याण कार्य काव्यांश कायस्थ (नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा) द्वारा सत्यापन के पश्चात ही प्रकाशित की जाती हैं।
             </p>
 
             <div className="mt-8 pt-5 border-t border-orange-100/70">
-              <span className="text-xs text-slate-400 font-medium">
-                Official ABVP Public Service Record • Mathura Nagar
+              <span className="text-xs text-slate-400 font-medium font-hindi">
+                अखिल भारतीय विद्यार्थी परिषद (ABVP) • चौमुहां–छाता–कोसी, मथुरा
               </span>
             </div>
           </div>

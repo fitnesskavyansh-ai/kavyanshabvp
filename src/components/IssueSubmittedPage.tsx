@@ -37,20 +37,6 @@ export const IssueSubmittedPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#faf8f5] text-slate-900 flex flex-col justify-between selection:bg-orange-500 selection:text-white">
-      {/* Background Watermarks */}
-      <div
-        aria-hidden="true"
-        className="fixed inset-0 pointer-events-none select-none z-0 flex items-center justify-center overflow-hidden"
-      >
-        <div className="w-[420px] h-[420px] sm:w-[600px] sm:h-[600px] opacity-[0.06] transition-all filter drop-shadow-[0_0_50px_rgba(249,115,22,0.15)]">
-          <img
-            src="/abvp-logo.png"
-            alt="ABVP Watermark"
-            className="w-full h-full object-contain"
-          />
-        </div>
-      </div>
-
       {/* Top Header Bar */}
       <header className="relative z-10 border-b border-orange-200/80 bg-white/90 backdrop-blur-md shadow-xs">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
