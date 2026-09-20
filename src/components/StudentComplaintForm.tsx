@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import {
   ShieldCheck,
   Send,
@@ -33,6 +34,11 @@ interface ComplaintFormErrors {
   email?: string;
   complaint?: string;
 }
+
+// EmailJS Client-Side Configuration (Public Credentials for Browser SDK)
+const EMAILJS_SERVICE_ID = 'service_tyw60qi';
+const EMAILJS_TEMPLATE_ID = 'template_orppjy2';
+const EMAILJS_PUBLIC_KEY = 'lW1N0rbLN37XEhpjX';
 
 export const StudentComplaintForm: React.FC = () => {
   const { showToast } = useApp();
@@ -195,97 +201,158 @@ export const StudentComplaintForm: React.FC = () => {
 
     const referenceId = `CMP-${Date.now().toString().slice(-6)}`;
 
-    // Format subject exactly as required:
-    // [New Complaint] - [Student Name] - [College Name]
-    const emailSubject = `[New Complaint] - ${trimmedName} - ${trimmedCollege}`;
+    // Email Subject containing student's name and reference number
+    const emailSubject = `[Student Complaint] ${trimmedName} (Ref: ${referenceId})`;
 
-    // Format email body with all required fields:
-    // Student Name, College / University Name, Mobile Number, Email ID, Complaint Details, Submission Date/Time, Website: kavyanshkayasthabvp.in
+    // Plain text formatted email body
     const emailBody = `NEW STUDENT COMPLAINT DETAILS
 ==================================================
-Student Name:
-${trimmedName}
+Reference Number: ${referenceId}
+Student Name:     ${trimmedName}
+College / Univ:   ${trimmedCollege}
+Mobile Number:    ${cleanMobile}
+Email ID:         ${trimmedEmail || 'Not provided'}
+Submitted At:     ${timestamp}
+Website:          kavyanshkayasthabvp.in
 
-College / University Name:
-${trimmedCollege}
-
-Mobile Number:
-${cleanMobile}
-
-Email ID:
-${trimmedEmail || 'Not provided'}
-
-Complaint Details:
+COMPLAINT / PROBLEM:
+--------------------------------------------------
 ${trimmedComplaint}
+==================================================
+Recipient: kavyanshkayasthabvp@gmail.com`;
 
-Submission Date/Time:
-${timestamp}
+    // Professionally formatted HTML email
+    const emailHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc; color: #1e293b;">
+  <div style="max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+    <!-- Header -->
+    <div style="background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); padding: 24px 28px; color: #ffffff;">
+      <div style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9;">पोर्टल छात्र शिकायत सूचना</div>
+      <h1 style="margin: 6px 0 0; font-size: 22px; font-weight: 700; color: #ffffff;">New Student Complaint Received</h1>
+      <div style="margin-top: 8px; font-size: 13px; opacity: 0.95;">Ref: <strong style="font-family: monospace; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">${referenceId}</strong></div>
+    </div>
 
-Reference ID:
-${referenceId}
+    <!-- Main Content -->
+    <div style="padding: 28px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+        <tr>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 35%; font-weight: 500;">Student Name</td>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #0f172a; font-weight: 700; font-size: 15px;">${trimmedName}</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; font-weight: 500;">College / University</td>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #0f172a; font-weight: 600;">${trimmedCollege}</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; font-weight: 500;">Mobile Number</td>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9;">
+            <a href="tel:${cleanMobile}" style="color: #ea580c; text-decoration: none; font-weight: 700;">+91 ${cleanMobile}</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; font-weight: 500;">Email ID</td>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #0f172a;">
+            ${trimmedEmail ? `<a href="mailto:${trimmedEmail}" style="color: #2563eb; text-decoration: none;">${trimmedEmail}</a>` : '<span style="color: #94a3b8; font-style: italic;">Not provided</span>'}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; font-weight: 500;">Submitted At</td>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #334155;">${timestamp}</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; font-weight: 500;">Reference Number</td>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #0f172a; font-family: monospace; font-weight: 700; font-size: 15px;">${referenceId}</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9; color: #64748b; font-weight: 500;">Source Website</td>
+          <td style="padding: 12px 8px; border-bottom: 1px solid #f1f5f9;">
+            <a href="https://kavyanshkayasthabvp.in" style="color: #ea580c; text-decoration: none; font-weight: 500;">kavyanshkayasthabvp.in</a>
+          </td>
+        </tr>
+      </table>
 
-Website:
-kavyanshkayasthabvp.in
+      <!-- Complaint Details Box -->
+      <div style="margin-top: 24px; background: #fff7ed; border-left: 4px solid #ea580c; padding: 18px; border-radius: 6px;">
+        <div style="font-size: 12px; font-weight: 700; color: #9a3412; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;">
+          Complaint / Problem Details (शिकायत का विवरण):
+        </div>
+        <div style="color: #1e293b; font-size: 14px; line-height: 1.7; white-space: pre-wrap; word-break: break-word;">${trimmedComplaint}</div>
+      </div>
+    </div>
 
-Recipient:
-kavyanshkayasthabvp@gmail.com
-==================================================`;
-
-    // Web3Forms Access Key from Vite Environment variable
-    const web3formsKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim() || '';
+    <!-- Footer -->
+    <div style="background: #f8fafc; padding: 16px 28px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; text-align: center;">
+      This complaint was submitted online at <a href="https://kavyanshkayasthabvp.in" style="color: #ea580c; text-decoration: none;">kavyanshkayasthabvp.in</a>.<br/>
+      Direct helpline: +91 63950 14760 • Mathura, Uttar Pradesh
+    </div>
+  </div>
+</body>
+</html>`.trim();
 
     try {
-      // Strictly verify that the access key is configured - do NOT fake success
-      if (!web3formsKey || web3formsKey === 'your_web3forms_access_key_here') {
-        throw new Error('MISSING_ACCESS_KEY');
-      }
+      // Prepare template parameters strictly according to requirements:
+      // Variables: student_name, college, mobile, email, complaint, submitted_at, website, reference_number
+      const templateParams: Record<string, unknown> = {
+        // Exact variables requested
+        student_name: trimmedName,
+        college: trimmedCollege,
+        mobile: cleanMobile,
+        email: trimmedEmail || 'Not provided',
+        complaint: trimmedComplaint,
+        submitted_at: timestamp,
+        website: 'kavyanshkayasthabvp.in',
+        reference_number: referenceId,
 
-      // Prepare payload strictly according to Web3Forms API specifications
-      // Note: The recipient email (kavyanshkayasthabvp@gmail.com) is bound to the access_key.
-      // We must NOT pass an invalid 'to_email' field or assign the recipient's own address as the submitter's 'email'.
-      const payload: Record<string, string> = {
-        access_key: web3formsKey,
-        subject: emailSubject,
-        from_name: 'छात्र शिकायत पोर्टल (kavyanshkayasthabvp.in)',
-        name: trimmedName,
-        'Student Name': trimmedName,
-        'College / University Name': trimmedCollege,
-        'Mobile Number': cleanMobile,
-        'Email ID': trimmedEmail || 'उपलब्ध नहीं (Not provided)',
-        'Complaint Details': trimmedComplaint,
-        'Submission Date/Time': timestamp,
-        Website: 'kavyanshkayasthabvp.in',
-        'Reference ID': referenceId,
+        // HTML and plain text formatted messages
+        html_message: emailHtml,
+        message_html: emailHtml,
         message: emailBody,
+
+        // Subject, routing, recipient, and reply-to configuration
+        subject: emailSubject,
+        email_subject: emailSubject,
+        to_email: 'kavyanshkayasthabvp@gmail.com',
+        recipient_email: 'kavyanshkayasthabvp@gmail.com',
+        to_name: 'Kavyansh Kayastha',
+        reply_to: trimmedEmail || undefined,
+
+        // Aliases for complete backward-compatibility with alternative template placeholder names
+        reference_id: referenceId,
+        college_name: trimmedCollege,
+        college_university: trimmedCollege,
+        mobile_number: cleanMobile,
+        student_email: trimmedEmail || 'Not provided',
+        complaint_details: trimmedComplaint,
+        submission_time: timestamp,
+        'Student Name': trimmedName,
+        'College / University': trimmedCollege,
+        'Mobile Number': cleanMobile,
+        'Email ID': trimmedEmail || 'Not provided',
+        'Complaint / Problem': trimmedComplaint,
+        'Submitted At': timestamp,
+        'Reference Number': referenceId,
+        'Website': 'kavyanshkayasthabvp.in',
       };
 
-      // Only attach student's email as sender/replyto if provided by the student
-      if (trimmedEmail) {
-        payload.email = trimmedEmail;
-        payload.replyto = trimmedEmail;
-      }
+      // Send email using official EmailJS Browser SDK
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        {
+          publicKey: EMAILJS_PUBLIC_KEY,
+        }
+      );
 
-      // Direct Web3Forms submission via official API endpoint
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      let result: { success?: boolean; message?: string } | null = null;
-      try {
-        result = await response.json();
-      } catch {
-        throw new Error('सर्वर से अमान्य प्रतिक्रिया प्राप्त हुई (Invalid server response)');
-      }
-
-      // STRICT VALIDATION: Do NOT show success unless Web3Forms API actually returns { success: true }
-      if (!response.ok || !result || result.success !== true) {
-        const errorDetail = result?.message || `HTTP ${response.status} Error`;
-        throw new Error(errorDetail);
+      // STRICT VALIDATION: Do NOT show success unless EmailJS confirms success (status 200 or 'OK')
+      if (!response || (response.status !== 200 && response.text !== 'OK')) {
+        throw new Error(response?.text || `EmailJS Error (${response?.status})`);
       }
 
       // Optional non-blocking secondary storage to local database if Express backend is running
@@ -311,7 +378,7 @@ kavyanshkayasthabvp@gmail.com
         // Fallback for static hosting environments (Firebase Hosting)
       }
 
-      // ONLY reach here when Web3Forms actually succeeded
+      // ONLY reach here when EmailJS actually succeeded
       setSuccessDetails({
         referenceId,
         studentName: trimmedName,
@@ -319,7 +386,7 @@ kavyanshkayasthabvp@gmail.com
         submittedAt: timestamp,
       });
       setSubmitSuccess(true);
-      showToast('आपकी शिकायत दर्ज कर ली गई है और ईमेल kavyanshkayasthabvp@gmail.com पर भेज दिया गया है।', 'success');
+      showToast('आपकी शिकायत दर्ज कर ली गई है। जल्द ही आपसे संपर्क किया जाएगा।', 'success');
 
       // Reset form inputs
       setFormData({
@@ -333,20 +400,24 @@ kavyanshkayasthabvp@gmail.com
       setTouched({});
       setErrors({});
     } catch (err: unknown) {
-      const rawError = err instanceof Error ? err.message : '';
-      let hindiMsg = 'ईमेल सर्वर पर संदेश भेजने में समस्या हुई।';
+      let errorDetail = '';
+      if (err && typeof err === 'object') {
+        if ('text' in err && typeof (err as { text?: unknown }).text === 'string') {
+          errorDetail = (err as { text: string }).text;
+        } else if ('message' in err && typeof (err as { message?: unknown }).message === 'string') {
+          errorDetail = (err as { message: string }).message;
+        }
+      }
 
-      if (rawError === 'MISSING_ACCESS_KEY') {
-        hindiMsg =
-          'ईमेल प्रेषण सेवा की Access Key (VITE_WEB3FORMS_ACCESS_KEY) अभी कॉन्फ़िगर नहीं की गई है।';
-      } else if (rawError) {
-        hindiMsg = `ईमेल प्रेषण त्रुटि: ${rawError}`;
+      let hindiMsg = 'ईमेल सेवा द्वारा शिकायत प्रेषित नहीं हो सकी।';
+      if (errorDetail) {
+        hindiMsg = `ईमेल प्रेषण त्रुटि: ${errorDetail}`;
       }
 
       setSubmitError(
-        `${hindiMsg}। शिकायत ईमेल पर प्रेषित नहीं हो सकी। कृपया व्यवस्थापक द्वारा पर्यावरण चर में मान्य Web3Forms Access Key दर्ज करें अथवा सीधे हेल्पलाइन +91 63950 14760 / ईमेल kavyanshkayasthabvp@gmail.com पर संपर्क करें।`
+        `${hindiMsg} कृपया कुछ समय पश्चात पुनः प्रयास करें अथवा सीधे हेल्पलाइन +91 63950 14760 / ईमेल kavyanshkayasthabvp@gmail.com पर संपर्क करें।`
       );
-      showToast('शिकायत दर्ज करने में त्रुटि हुई। संदेश नहीं भेजा जा सका।', 'error');
+      showToast('शिकायत दर्ज करने में त्रुटि हुई। कृपया पुनः प्रयास करें।', 'error');
     } finally {
       setIsSubmitting(false);
     }

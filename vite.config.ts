@@ -12,13 +12,8 @@ if (fs.existsSync(envPath)) {
 }
 
 export default defineConfig(() => {
-  const web3formsKey = process.env.VITE_WEB3FORMS_ACCESS_KEY || '';
-
   return {
     plugins: [react(), tailwindcss()],
-    define: {
-      'import.meta.env.VITE_WEB3FORMS_ACCESS_KEY': JSON.stringify(web3formsKey),
-    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
