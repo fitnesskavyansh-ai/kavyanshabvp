@@ -318,7 +318,7 @@ export const AdminDashboardModal: React.FC = () => {
 
       localStorage.setItem('abvp_admin_token', data.token);
       setAdminToken(data.token);
-      showToast('Welcome Kavyansh Kayastha (नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा). Admin access authorized.', 'success');
+      showToast('Welcome Kavyansh Kayastha (नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा). Admin access authorized.', 'success');
       setLoginPassword('');
     } catch (err: any) {
       showToast(err.message || 'Invalid credentials', 'error');
@@ -554,7 +554,7 @@ export const AdminDashboardModal: React.FC = () => {
         },
         body: JSON.stringify({
           status: 'Resolved',
-          resolutionNotes: 'Resolved by Kavyansh Kayastha grievance desk (नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा) on ' + new Date().toLocaleDateString(),
+          resolutionNotes: 'Resolved by Kavyansh Kayastha grievance desk (नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा) on ' + new Date().toLocaleDateString(),
         }),
       });
       showToast('Issue marked as Resolved', 'success');
@@ -1557,7 +1557,7 @@ export const AdminDashboardModal: React.FC = () => {
                             type="text"
                             value={journeyForm.title}
                             onChange={(e) => setJourneyForm({ ...journeyForm, title: e.target.value })}
-                            placeholder="e.g. नगर मंत्री, मथुरा"
+                            placeholder="e.g. नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा"
                             className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white font-hindi"
                           />
                         </div>
@@ -2411,7 +2411,7 @@ export const AdminDashboardModal: React.FC = () => {
                     type="text"
                     value={updatingAssignedTo}
                     onChange={(e) => setUpdatingAssignedTo(e.target.value)}
-                    placeholder="e.g. नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा"
+                    placeholder="e.g. नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा"
                     className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white"
                   />
                 </div>
@@ -2591,7 +2591,7 @@ export const AdminDashboardModal: React.FC = () => {
                   <div className="border-b border-slate-200 pb-4 text-xs sm:text-sm leading-relaxed">
                     <span className="text-slate-500 uppercase font-bold text-[11px] block">प्रति (To),</span>
                     <div className="font-extrabold text-slate-900 text-base mt-0.5">श्री काव्यंश कायस्थ जी</div>
-                    <div className="text-slate-700 font-medium">नगर मंत्री, अखिल भारतीय विद्यार्थी परिषद (ABVP) मथुरा महानगर</div>
+                    <div className="text-slate-700 font-medium">नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा (ABVP)</div>
                     <div className="text-slate-500 text-xs">विद्यार्थी भवन, मथुरा (उ.प्र.) • ईमेल: kavyanshkayasthabvp@gmail.com</div>
                   </div>
 
@@ -2673,7 +2673,7 @@ export const AdminDashboardModal: React.FC = () => {
                         DIGITALLY CERTIFIED • ABVP MATHURA
                       </div>
                       <div className="text-base font-black text-slate-900">काव्यंश कायस्थ</div>
-                      <div className="text-xs text-slate-600 font-semibold">नगर मंत्री, अखिल भारतीय विद्यार्थी परिषद (ABVP) मथुरा</div>
+                      <div className="text-xs text-slate-600 font-semibold">नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा (ABVP)</div>
                       <div className="text-[11px] text-slate-500">हेल्पलाइन: +91 63950 14760 | ईमेल: kavyanshkayasthabvp@gmail.com</div>
                     </div>
                   </div>

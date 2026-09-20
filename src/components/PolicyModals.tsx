@@ -31,7 +31,7 @@ export const PolicyModals: React.FC = () => {
 
             <div className="space-y-3 text-sm text-slate-600 leading-relaxed font-medium">
               <p>
-                यह व्यक्तिगत सार्वजनिक सेवा वेबसाइट काव्यांश कायस्थ, नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा (अखिल भारतीय विद्यार्थी परिषद - ABVP) की है। हम आपकी गोपनीयता और व्यक्तिगत विवरणों की सुरक्षा के प्रति पूर्णतः प्रतिबद्ध हैं।
+                यह व्यक्तिगत सार्वजनिक सेवा वेबसाइट काव्यांश कायस्थ, नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा (अखिल भारतीय विद्यार्थी परिषद - ABVP) की है। हम आपकी गोपनीयता और व्यक्तिगत विवरणों की सुरक्षा के प्रति पूर्णतः प्रतिबद्ध हैं।
               </p>
 
               <h4 className="font-bold text-slate-950 text-sm">1. Information We Collect</h4>
@@ -72,7 +72,7 @@ export const PolicyModals: React.FC = () => {
             <div className="space-y-3 text-sm text-slate-600 leading-relaxed font-medium">
               <h4 className="font-bold text-slate-950 text-sm">1. Nature of the Website</h4>
               <p>
-                This is a personal public service portfolio of an ABVP student organisation worker (काव्यांश कायस्थ • नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा). It is designed to facilitate constructive student dialogue and communication. It is not an official portal of any university or government body.
+                This is a personal public service portfolio of an ABVP student organisation worker (काव्यांश कायस्थ • नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा). It is designed to facilitate constructive student dialogue and communication. It is not an official portal of any university or government body.
               </p>
 
               <h4 className="font-bold text-slate-950 text-sm">2. Honest and Truthful Submissions</h4>
@@ -107,7 +107,7 @@ export const PolicyModals: React.FC = () => {
 
               <ul className="list-disc pl-5 space-y-1.5 text-xs text-slate-700">
                 <li>
-                  <strong>Direct Review:</strong> Reviewed directly by Kavyansh Kayastha (नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा) and the student leadership desk.
+                  <strong>Direct Review:</strong> Reviewed directly by Kavyansh Kayastha (नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा) and the student leadership desk.
                 </li>
                 <li>
                   <strong>Authority Communication:</strong> When drafting a memorandum (gyapan) or approaching university officials, your case details are presented responsibly.

@@ -109,7 +109,7 @@ export const ContactSection: React.FC = () => {
                     काव्यांश कायस्थ
                   </h4>
                   <p className="text-xs font-bold text-orange-600 font-hindi">
-                    {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
+                    {profile.role || 'नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा'}
                   </p>
                   <p className="text-[11px] text-slate-500 font-medium font-hindi">
                     अखिल भारतीय विद्यार्थी परिषद (ABVP)

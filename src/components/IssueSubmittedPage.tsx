@@ -150,7 +150,7 @@ export const IssueSubmittedPage: React.FC = () => {
 
           {/* Contact Helpline info */}
           <div className="mt-4 text-[11px] text-slate-400">
-            काव्यंश कायस्थ (नगर मंत्री, एबीवीपी मथुरा महानगर) • हेल्पलाइन: +91 63950 14760
+            काव्यंश कायस्थ (नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा) • हेल्पलाइन: +91 63950 14760
           </div>
         </div>
       </main>

@@ -290,8 +290,8 @@ function formatFormalComplaintMemo(issue: any): string {
     `स्थिति: पंजीकृत (Under Review)`,
     '',
     'प्रति,',
-    'श्री काव्यंश कायस्थ जी (नगर मंत्री)',
-    'अखिल भारतीय विद्यार्थी परिषद (ABVP), मथुरा महानगर इकाई',
+    'श्री काव्यंश कायस्थ जी (नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा)',
+    'अखिल भारतीय विद्यार्थी परिषद (ABVP)',
     '',
     'विषय: ' + issue.title,
     'समस्या श्रेणी: ' + issue.category,
@@ -315,7 +315,7 @@ function formatFormalComplaintMemo(issue: any): string {
     '"आवेदक द्वारा प्रमाणित किया गया है कि उपरोक्त शिकायत विवरण सत्य है तथा निवारण हेतु एबीवीपी मथुरा के सहयोग की प्रार्थना की गई है।"',
     '',
     'डिजिटल सत्यापन: ABVP-MTH-PORTAL-VERIFIED',
-    'काव्यंश कायस्थ (नगर मंत्री, एबीवीपी मथुरा महानगर)',
+    'काव्यंश कायस्थ (नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा)',
     'हेल्पलाइन: +91 63950 14760 | ईमेल: kavyanshkayasthabvp@gmail.com',
     '============================================================',
   ].join('\n');
@@ -454,8 +454,9 @@ async function sendIssueNotificationEmail(issue: any, baseUrl?: string) {
       <!-- Addressing -->
       <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 16px; font-size: 14px; line-height: 1.6;">
         <span style="color: #64748b; font-size: 12px; font-weight: 700; text-transform: uppercase;">प्रति (To),</span><br/>
-        <strong style="color: #0f172a; font-size: 16px;">श्री काव्यंश कायस्थ जी</strong> (नगर मंत्री)<br/>
-        <span style="color: #475569;">अखिल भारतीय विद्यार्थी परिषद (ABVP), मथुरा महानगर</span>
+        <strong style="color: #0f172a; font-size: 16px;">श्री काव्यंश कायस्थ जी</strong><br/>
+        <span style="color: #ea580c; font-weight: 700;">नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा</span><br/>
+        <span style="color: #475569;">अखिल भारतीय विद्यार्थी परिषद (ABVP)</span>
       </div>
 
       <!-- Subject Memo Box -->
@@ -552,7 +553,7 @@ ${issue.description}
               SEAL<br/>ABVP<br/>MATHURA
             </div>
             <div style="font-weight: 800; color: #0f172a; font-size: 14px;">काव्यंश कायस्थ</div>
-            <div style="font-size: 12px; color: #64748b;">नगर मंत्री, एबीवीपी मथुरा</div>
+            <div style="font-size: 12px; color: #64748b;">नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा (ABVP)</div>
           </td>
         </tr>
       </table>

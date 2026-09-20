@@ -20,7 +20,7 @@ import {
 export const INITIAL_PROFILE: ProfileConfig = {
   name: 'Kavyansh Kayastha',
   communitySubtitle: 'कायस्थ',
-  role: 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा',
+  role: 'नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा',
   organisation: 'अखिल भारतीय विद्यार्थी परिषद (ABVP)',
   city: 'Mathura, Uttar Pradesh, India',
   hometown: 'Bareilly, Uttar Pradesh, India',
@@ -49,7 +49,7 @@ export const INITIAL_PROFILE: ProfileConfig = {
   shortIntro:
     'Students, youth and society ke issues ko sunna, unhe samajhna aur appropriate platform tak pahunchana meri public-service journey ka important part hai.',
   detailedAbout:
-    'Main Kavyansh Kayastha, vartamaan mein Akhil Bharatiya Vidyarthi Parishad ke नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा ke roop mein student/youth activities mein actively associated hoon. Mera focus students aur young people se jude issues ko sunna, samajhna aur unke appropriate resolution ke liye concerned platform tak pahunchana hai.',
+    'Main Kavyansh Kayastha, vartamaan mein Akhil Bharatiya Vidyarthi Parishad ke नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा ke roop mein student/youth activities mein actively associated hoon. Mera focus students aur young people se jude issues ko sunna, samajhna aur unke appropriate resolution ke liye concerned platform tak pahunchana hai.',
   visionPoints: [
     {
       title: 'Listening to Students (छात्रों की आवाज़)',
@@ -146,10 +146,10 @@ export const INITIAL_JOURNEY: JourneyMilestone[] = [
   {
     id: 'j-5',
     yearOrDate: '9 September 2026',
-    title: 'नगर मंत्री, मथुरा',
+    title: 'नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा',
     englishLabel: 'Current Responsibility',
     description:
-      '9 September 2026 को अखिल भारतीय विद्यार्थी परिषद में नगर मंत्री, मथुरा का वर्तमान दायित्व प्राप्त हुआ। यह मेरी संगठनात्मक यात्रा में वर्तमान जिम्मेदारी का महत्वपूर्ण चरण है।',
+      '9 September 2026 को अखिल भारतीय विद्यार्थी परिषद में नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा का वर्तमान दायित्व प्राप्त हुआ। यह मेरी संगठनात्मक यात्रा में वर्तमान जिम्मेदारी का महत्वपूर्ण चरण है।',
     category: 'Current Responsibility',
     status: 'CURRENT',
     badge: 'वर्तमान दायित्व',
@@ -280,13 +280,13 @@ export const INITIAL_FAQS: FAQItem[] = [
     id: 'faq-1',
     question: 'Who is Kavyansh Kayastha?',
     answer:
-      'काव्यांश कायस्थ अखिल भारतीय विद्यार्थी परिषद (ABVP) में नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा के रूप में छात्र कल्याण, समस्या समाधान और सकारात्मक युवा सशक्तिकरण के लिए सक्रिय रूप से कार्यरत हैं।',
+      'काव्यांश कायस्थ अखिल भारतीय विद्यार्थी परिषद (ABVP) में नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा के रूप में छात्र कल्याण, समस्या समाधान और सकारात्मक युवा सशक्तिकरण के लिए सक्रिय रूप से कार्यरत हैं।',
   },
   {
     id: 'faq-2',
     question: 'What is his current role?',
     answer:
-      'उनका संगठनात्मक दायित्व: नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा (अखिल भारतीय विद्यार्थी परिषद - ABVP)।',
+      'उनका संगठनात्मक दायित्व: नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा (अखिल भारतीय विद्यार्थी परिषद - ABVP)।',
   },
   {
     id: 'faq-3',

@@ -71,7 +71,7 @@ export const AboutSection: React.FC = () => {
             Personal & Academic Profile
           </h2>
           <p className="mt-3 text-base sm:text-lg text-slate-600 font-medium font-hindi">
-            काव्यांश कायस्थ • नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)
+            काव्यांश कायस्थ • नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)
           </p>
         </div>
 
@@ -105,7 +105,7 @@ export const AboutSection: React.FC = () => {
 
                   {/* Role indicator pill */}
                   <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-orange-500 to-orange-600 text-white border border-orange-400 px-3.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold whitespace-nowrap shadow-md font-hindi">
-                    नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा
+                    नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा
                   </div>
                 </div>
 
@@ -121,7 +121,7 @@ export const AboutSection: React.FC = () => {
                   </div>
 
                   <p className="text-xs sm:text-sm font-bold text-orange-600 pt-1 font-hindi">
-                    {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
+                    {profile.role || 'नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा'}
                   </p>
                   <p className="text-xs text-slate-600 font-medium font-hindi">
                     {profile.organisation || 'अखिल भारतीय विद्यार्थी परिषद (ABVP)'}
@@ -236,7 +236,7 @@ export const AboutSection: React.FC = () => {
                       <span>Public Role</span>
                     </dt>
                     <dd className="sm:text-right font-bold text-orange-600 pl-9 sm:pl-0 font-hindi">
-                      {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
+                      {profile.role || 'नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा'}
                     </dd>
                   </div>
 

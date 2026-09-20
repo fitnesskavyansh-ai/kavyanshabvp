@@ -93,12 +93,12 @@ export const ActivitiesSection: React.FC = () => {
             </p>
 
             <p className="text-sm text-slate-500 font-medium max-w-md mx-auto leading-relaxed font-hindi">
-              गतिविधियाँ एवं छात्र कल्याण कार्य काव्यांश कायस्थ (नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा) द्वारा सत्यापन के पश्चात ही प्रकाशित की जाती हैं।
+              गतिविधियाँ एवं छात्र कल्याण कार्य काव्यांश कायस्थ (नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा) द्वारा सत्यापन के पश्चात ही प्रकाशित की जाती हैं।
             </p>
 
             <div className="mt-8 pt-5 border-t border-orange-100/70">
               <span className="text-xs text-slate-400 font-medium font-hindi">
-                अखिल भारतीय विद्यार्थी परिषद (ABVP) • चौमुहां–छाता–कोसी, मथुरा
+                अखिल भारतीय विद्यार्थी परिषद (ABVP) • चौमुहां-छाता-कोसी क्षेत्र, मथुरा
               </span>
             </div>
           </div>

@@ -139,7 +139,7 @@ export const Navbar: React.FC = () => {
                 काव्यांश कायस्थ
               </span>
               <span className="text-[11px] sm:text-xs font-bold text-orange-600 leading-tight font-hindi mt-0.5">
-                नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा
+                नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा
               </span>
               <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium leading-tight font-hindi mt-0.5">
                 अखिल भारतीय विद्यार्थी परिषद (ABVP)
@@ -220,7 +220,7 @@ export const Navbar: React.FC = () => {
                 काव्यांश कायस्थ
               </div>
               <div className="text-[11px] font-bold text-orange-600 truncate font-hindi">
-                {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
+                {profile.role || 'नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा'}
               </div>
               <div className="text-[10px] text-slate-500 truncate font-hindi">
                 अखिल भारतीय विद्यार्थी परिषद (ABVP)

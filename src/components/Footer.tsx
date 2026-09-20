@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
                   काव्यांश कायस्थ
                 </h3>
                 <p className="text-xs text-orange-600 font-bold font-hindi">
-                  {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
+                  {profile.role || 'नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा'}
                 </p>
                 <p className="text-[11px] text-slate-500 font-medium font-hindi">
                   अखिल भारतीय विद्यार्थी परिषद (ABVP)
@@ -200,7 +200,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="mt-8 pt-6 border-t border-orange-100 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[11px] text-slate-500 text-center sm:text-left font-medium font-hindi">
-            Copyright © {currentYear} काव्यांश कायस्थ. All rights reserved. • नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा (अखिल भारतीय विद्यार्थी परिषद - ABVP).
+            Copyright © {currentYear} काव्यांश कायस्थ. All rights reserved. • नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा (अखिल भारतीय विद्यार्थी परिषद - ABVP).
           </p>
 
           <div className="flex items-center gap-3">

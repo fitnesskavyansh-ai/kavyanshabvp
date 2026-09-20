@@ -129,7 +129,7 @@ export const GallerySection: React.FC = () => {
             ) : (
               <div className="mt-8 pt-5 border-t border-orange-100/70">
                 <span className="text-xs text-slate-400 font-medium font-hindi">
-                  काव्यांश कायस्थ • नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)
+                  काव्यांश कायस्थ • नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)
                 </span>
               </div>
             )}

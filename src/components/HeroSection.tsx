@@ -63,7 +63,7 @@ export const HeroSection: React.FC = () => {
               {/* Status Badge */}
               <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white border border-orange-200 text-slate-900 px-4 py-1.5 rounded-full text-xs font-bold shadow-md whitespace-nowrap flex items-center gap-2 ring-2 ring-orange-50 z-10 font-hindi">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span className="text-slate-800">नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा</span>
+                <span className="text-slate-800">नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा</span>
               </div>
             </div>
 
@@ -74,7 +74,7 @@ export const HeroSection: React.FC = () => {
                 <span>आधिकारिक तस्वीर लॉक एवं स्थायी (Permanently Locked)</span>
               </div>
               <p className="text-[11px] text-slate-600 text-center max-w-xs font-medium font-hindi">
-                काव्यांश कायस्थ • नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)
+                काव्यांश कायस्थ • नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)
               </p>
             </div>
           </div>
@@ -84,7 +84,7 @@ export const HeroSection: React.FC = () => {
             {/* Tagline Badge with Clean Icon */}
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-orange-100/90 border border-orange-300 text-orange-950 text-xs font-bold w-fit mx-auto lg:mx-0 shadow-xs font-hindi">
               <ShieldCheck className="w-4 h-4 text-orange-600 flex-shrink-0" />
-              <span>नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)</span>
+              <span>नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा • अखिल भारतीय विद्यार्थी परिषद (ABVP)</span>
             </div>
 
             {/* Name & Role */}
@@ -107,7 +107,7 @@ export const HeroSection: React.FC = () => {
                   id="hero-public-role"
                   className="text-xl sm:text-2xl font-extrabold text-orange-600 font-hindi"
                 >
-                  {profile.role || 'नगर मंत्री, चौमुहां–छाता–कोसी, मथुरा'}
+                  {profile.role || 'नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा'}
                 </p>
 
                 {/* Organization Card */}
