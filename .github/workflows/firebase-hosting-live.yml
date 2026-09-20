@@ -31,3 +31,11 @@ jobs:
 
       - name: Build website
         run: npm run build
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAVYANSHKAYASTHABVP_D8C62 }}
+          projectId: kavyanshkayasthabvp-d8c62
+          channelId: live
