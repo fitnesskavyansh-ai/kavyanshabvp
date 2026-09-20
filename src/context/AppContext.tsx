@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useAdminAuth } from './AdminAuthContext';
 import {
   ProfileConfig,
   SubmittedIssue,
@@ -59,9 +60,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isIssueModalOpen, setIsIssueModalOpen] = useState(false);
   const [isPhotoUploadOpen, setIsPhotoUploadOpen] = useState(false);
   const [activePolicyModal, setActivePolicyModal] = useState<'privacy' | 'terms' | 'submission' | null>(null);
-  const [adminToken, setAdminToken] = useState<string | null>(() => {
-    return localStorage.getItem('abvp_admin_token');
-  });
+  const { user, isAdmin } = useAdminAuth();
+  const [adminToken, setAdminToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (user && isAdmin) {
+      user
+        .getIdToken()
+        .then((token) => {
+          if (isMounted) setAdminToken(token);
+        })
+        .catch(() => {
+          if (isMounted) setAdminToken(null);
+        });
+    } else {
+      setAdminToken(null);
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [user, isAdmin]);
   const [toastMessage, setToastMessage] = useState<{
     text: string;
     type: 'success' | 'error' | 'info';

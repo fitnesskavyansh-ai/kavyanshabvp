@@ -1,0 +1,36 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Helper: verifies that request is made by the single authorized admin UID
+    function isAdmin() {
+      return request.auth != null 
+        && request.auth.uid == 'i9mqewCLQ0fW7sXAKeoTX68CGF73';
+    }
+
+    // Activities Media storage path: activities/{activityId}/{fileName}
+    match /activities/{activityId}/{fileName} {
+      // Public users may read media belonging to activities
+      allow read: if true;
+
+      // Only the authenticated admin can upload or replace media
+      // Strictly enforces file type and size constraints:
+      // - Photos: image/* up to 15 MB
+      // - Videos: video/* up to 150 MB
+      allow create, update: if isAdmin()
+        && (
+          (request.resource.contentType.matches('image/.*') && request.resource.size <= 15 * 1024 * 1024)
+          ||
+          (request.resource.contentType.matches('video/.*') && request.resource.size <= 150 * 1024 * 1024)
+        );
+
+      // Only the authenticated admin can delete media
+      allow delete: if isAdmin();
+    }
+
+    // Deny all other unauthenticated or unauthorized writes/reads across the bucket
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

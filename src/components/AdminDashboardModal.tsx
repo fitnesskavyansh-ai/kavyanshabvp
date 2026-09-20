@@ -45,6 +45,8 @@ import {
   GalleryCategory,
 } from '../types';
 import { useApp } from '../context/AppContext';
+import { useAdminAuth } from '../context/AdminAuthContext';
+import { CONFIGURED_ADMIN_UID } from '../lib/firebase';
 
 export const AdminDashboardModal: React.FC = () => {
   const {
@@ -67,10 +69,39 @@ export const AdminDashboardModal: React.FC = () => {
     togglePublishGalleryItem,
   } = useApp();
 
-  // Login form state
-  const [loginUsername, setLoginUsername] = useState('admin');
+  // Firebase Auth for Administrator
+  const {
+    user,
+    isAdmin,
+    loading: authLoading,
+    authError,
+    signIn,
+    signOut,
+    resetPassword,
+    clearError,
+    refreshClaims,
+  } = useAdminAuth();
+
+  // Login & Password Reset State
+  const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
+  const [showForgotPass, setShowForgotPass] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotSending, setForgotSending] = useState(false);
+  const [forgotSuccess, setForgotSuccess] = useState<string | null>(null);
+
+  // Helper to obtain current Firebase Admin ID token
+  const getAuthToken = async (): Promise<string | null> => {
+    if (user && isAdmin) {
+      try {
+        return await user.getIdToken();
+      } catch {
+        return adminToken || null;
+      }
+    }
+    return adminToken || null;
+  };
 
   // Active Tab: 'issues' | 'messages' | 'profile' | 'journey' | 'gallery'
   const [activeTab, setActiveTab] = useState<'issues' | 'messages' | 'profile' | 'journey' | 'gallery'>('issues');
@@ -219,13 +250,15 @@ export const AdminDashboardModal: React.FC = () => {
 
   const handleConfirmReplacePhoto = async () => {
     if (!pendingPhotoData) return;
+    const token = await getAuthToken();
+    if (!token) return;
     setIsPhotoUpdating(true);
     try {
       const res = await fetch('/api/admin/profile-photo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${adminToken}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ imageBase64: pendingPhotoData }),
       });
@@ -259,12 +292,14 @@ export const AdminDashboardModal: React.FC = () => {
     if (!window.confirm('Are you sure you want to remove the current profile photo?')) {
       return;
     }
+    const token = await getAuthToken();
+    if (!token) return;
     setIsPhotoUpdating(true);
     try {
       const res = await fetch('/api/admin/profile-photo', {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${adminToken}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -291,60 +326,66 @@ export const AdminDashboardModal: React.FC = () => {
     }
   };
 
-  // Verify or fetch data on load
+  // Verify or fetch data on load when authenticated as admin
   useEffect(() => {
-    if (isAdminOpen && adminToken) {
+    if (isAdminOpen && user && isAdmin) {
       fetchIssues();
       fetchContactMessages();
       fetchSmtpStatus();
     }
-  }, [isAdminOpen, adminToken, statusFilter, categoryFilter, searchTerm, dateFilter]);
+  }, [isAdminOpen, user, isAdmin, statusFilter, categoryFilter, searchTerm, dateFilter]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!loginEmail.trim() || !loginPassword) {
+      showToast('Please enter both administrator email and password.', 'error');
+      return;
+    }
     setLoginLoading(true);
 
     try {
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: loginUsername, password: loginPassword }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || 'Authentication failed');
-      }
-
-      localStorage.setItem('abvp_admin_token', data.token);
-      setAdminToken(data.token);
-      showToast('Welcome Kavyansh Kayastha (नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा). Admin access authorized.', 'success');
+      await signIn(loginEmail.trim(), loginPassword);
+      showToast('Welcome Kavyansh Kayastha (नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा). Administrator access authorized.', 'success');
       setLoginPassword('');
     } catch (err: any) {
-      showToast(err.message || 'Invalid credentials', 'error');
+      showToast(err.message || 'Authentication failed', 'error');
     } finally {
       setLoginLoading(false);
     }
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const targetEmail = forgotEmail.trim() || loginEmail.trim();
+    if (!targetEmail) {
+      showToast('Please enter your administrator email to receive reset instructions.', 'error');
+      return;
+    }
+    setForgotSending(true);
+    try {
+      await resetPassword(targetEmail);
+      setForgotSuccess(`Password reset email dispatched to ${targetEmail}. Please check your inbox.`);
+      showToast(`Password reset link sent to ${targetEmail}`, 'success');
+    } catch (err: any) {
+      showToast(err.message || 'Failed to send password reset email', 'error');
+    } finally {
+      setForgotSending(false);
+    }
+  };
+
   const handleLogout = async () => {
     try {
-      if (adminToken) {
-        await fetch('/api/admin/logout', {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${adminToken}` },
-        });
-      }
+      await signOut();
     } catch (e) {
       // ignore
     }
-    localStorage.removeItem('abvp_admin_token');
     setAdminToken(null);
     showToast('Logged out of Admin Portal', 'info');
   };
 
   const fetchIssues = async () => {
-    if (!adminToken) return;
+    const token = await getAuthToken();
+    if (!token) return;
     setIssuesLoading(true);
 
     try {
@@ -355,11 +396,10 @@ export const AdminDashboardModal: React.FC = () => {
       if (dateFilter) params.append('date', dateFilter);
 
       const res = await fetch(`/api/issues?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${adminToken}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (res.status === 401) {
-        handleLogout();
+      if (res.status === 401 || res.status === 403) {
         return;
       }
 
@@ -376,10 +416,11 @@ export const AdminDashboardModal: React.FC = () => {
   };
 
   const fetchContactMessages = async () => {
-    if (!adminToken) return;
+    const token = await getAuthToken();
+    if (!token) return;
     try {
       const res = await fetch('/api/contact', {
-        headers: { Authorization: `Bearer ${adminToken}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
         const data = await res.json();
@@ -391,10 +432,11 @@ export const AdminDashboardModal: React.FC = () => {
   };
 
   const fetchSmtpStatus = async () => {
-    if (!adminToken) return;
+    const token = await getAuthToken();
+    if (!token) return;
     try {
       const res = await fetch('/api/admin/smtp-status', {
-        headers: { Authorization: `Bearer ${adminToken}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
         const data = await res.json();
@@ -406,12 +448,13 @@ export const AdminDashboardModal: React.FC = () => {
   };
 
   const handleSendTestEmail = async () => {
-    if (!adminToken) return;
+    const token = await getAuthToken();
+    if (!token) return;
     setIsTestingEmail(true);
     try {
       const res = await fetch('/api/admin/test-email', {
         method: 'POST',
-        headers: { Authorization: `Bearer ${adminToken}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to dispatch test email');
@@ -429,7 +472,8 @@ export const AdminDashboardModal: React.FC = () => {
   };
 
   const handleSaveSmtpPassword = async () => {
-    if (!adminToken) return;
+    const token = await getAuthToken();
+    if (!token) return;
     if (!smtpPassInput.trim()) {
       showToast('कृपया 16-अक्षरों का Google App Password दर्ज करें', 'error');
       return;
@@ -440,7 +484,7 @@ export const AdminDashboardModal: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${adminToken}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           smtpUser: smtpEmailInput.trim() || 'kavyanshkayasthabvp@gmail.com',
@@ -462,14 +506,15 @@ export const AdminDashboardModal: React.FC = () => {
 
   const [isTriggeringRelay, setIsTriggeringRelay] = useState(false);
   const handleTriggerCloudRelay = async () => {
-    if (!adminToken) return;
+    const token = await getAuthToken();
+    if (!token) return;
     setIsTriggeringRelay(true);
     try {
       const res = await fetch('/api/admin/trigger-cloud-relay', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${adminToken}`,
+          Authorization: `Bearer ${token}`,
         },
       });
       const data = await res.json();
@@ -482,12 +527,13 @@ export const AdminDashboardModal: React.FC = () => {
   };
 
   const handleResendIssueEmail = async (issueId: string, ticketNumber: string) => {
-    if (!adminToken) return;
+    const token = await getAuthToken();
+    if (!token) return;
     setIsResendingEmailId(issueId);
     try {
       const res = await fetch(`/api/issues/${issueId}/resend-email`, {
         method: 'POST',
-        headers: { Authorization: `Bearer ${adminToken}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to resend issue email');
@@ -510,7 +556,9 @@ export const AdminDashboardModal: React.FC = () => {
   };
 
   const saveIssueUpdates = async () => {
-    if (!selectedIssue || !adminToken) return;
+    if (!selectedIssue) return;
+    const token = await getAuthToken();
+    if (!token) return;
     setIsSavingIssue(true);
 
     try {
@@ -518,7 +566,7 @@ export const AdminDashboardModal: React.FC = () => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${adminToken}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           status: updatingStatus,
@@ -544,13 +592,14 @@ export const AdminDashboardModal: React.FC = () => {
   };
 
   const markResolved = async (issueId: string) => {
-    if (!adminToken) return;
+    const token = await getAuthToken();
+    if (!token) return;
     try {
       await fetch(`/api/issues/${issueId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${adminToken}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           status: 'Resolved',
@@ -568,7 +617,8 @@ export const AdminDashboardModal: React.FC = () => {
   };
 
   const deleteIssue = async (id: string, ticketNumber: string) => {
-    if (!adminToken) return;
+    const token = await getAuthToken();
+    if (!token) return;
     if (!window.confirm(`Are you sure you want to delete grievance ${ticketNumber}? This action is irreversible.`)) {
       return;
     }
@@ -576,7 +626,7 @@ export const AdminDashboardModal: React.FC = () => {
     try {
       const res = await fetch(`/api/issues/${id}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${adminToken}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (res.ok) {
@@ -645,15 +695,25 @@ export const AdminDashboardModal: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            {adminToken && (
-              <button
-                onClick={handleLogout}
-                className="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 hover:text-red-400 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span>Logout</span>
-              </button>
+          <div className="flex items-center gap-2 sm:gap-3">
+            {user && isAdmin && (
+              <>
+                <a
+                  href="/admin"
+                  className="hidden sm:inline-flex items-center gap-1.5 text-xs text-orange-400 hover:text-orange-300 bg-orange-500/10 hover:bg-orange-500/20 px-3 py-1.5 rounded-lg border border-orange-500/30 transition font-hindi"
+                  title="Open Activity Management System"
+                >
+                  <Compass className="w-3.5 h-3.5" />
+                  <span>गतिविधि डैशबोर्ड (Activities)</span>
+                </a>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-red-400 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 transition"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Logout</span>
+                </button>
+              </>
             )}
             <button
               onClick={() => setIsAdminOpen(false)}
@@ -666,61 +726,200 @@ export const AdminDashboardModal: React.FC = () => {
 
         {/* Modal Content */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-          {!adminToken ? (
-            /* Login Form */
-            <div className="max-w-md mx-auto py-12 px-4 space-y-6">
+          {authLoading ? (
+            <div className="max-w-md mx-auto py-20 px-4 text-center space-y-3">
+              <Loader2 className="w-8 h-8 animate-spin text-orange-500 mx-auto" />
+              <p className="text-sm font-semibold text-slate-300">Checking administrator authorization...</p>
+            </div>
+          ) : !user ? (
+            /* Firebase Email & Password Login Form */
+            <div className="max-w-md mx-auto py-8 px-4 space-y-6">
               <div className="text-center space-y-2">
-                <div className="w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center mx-auto">
-                  <Lock className="w-7 h-7" />
+                <div className="w-14 h-14 rounded-2xl bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center mx-auto shadow-inner">
+                  <ShieldCheck className="w-7 h-7" />
                 </div>
-                <h4 className="text-xl font-bold text-white">Admin Authentication</h4>
-                <p className="text-xs text-slate-400">
-                  Enter your administrative credentials to manage student grievances and portal data.
+                <h4 className="text-xl font-bold text-white font-hindi">व्यवस्थापक लॉगिन (Admin Portal Login)</h4>
+                <p className="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
+                  Enter authorized administrator credentials to manage student grievances, inquiries, and official portal records.
                 </p>
+                <div className="inline-block mt-1 px-2.5 py-0.5 rounded-full bg-slate-800 text-[11px] text-orange-300 border border-slate-700 font-hindi">
+                  काव्यांश कायस्थ • नगर मंत्री, चौमुहां-छाता-कोसी क्षेत्र, मथुरा
+                </div>
               </div>
 
-              <form onSubmit={handleLogin} className="space-y-4 bg-slate-800/80 p-6 rounded-2xl border border-slate-700">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                    Admin Username
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={loginUsername}
-                    onChange={(e) => setLoginUsername(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-orange-500 focus:outline-none"
-                  />
+              {authError && (
+                <div className="p-3.5 rounded-xl bg-red-500/15 border border-red-500/30 text-xs text-red-200 flex items-start gap-2.5">
+                  <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-semibold">{authError}</p>
+                  </div>
+                  <button onClick={clearError} className="text-red-400 hover:text-white text-xs">✕</button>
+                </div>
+              )}
+
+              {showForgotPass ? (
+                <form onSubmit={handleForgotPassword} className="space-y-4 bg-slate-800/80 p-6 rounded-2xl border border-slate-700 shadow-xl">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Reset Password</span>
+                    <button
+                      type="button"
+                      onClick={() => { setShowForgotPass(false); setForgotSuccess(null); }}
+                      className="text-xs text-orange-400 hover:text-orange-300 underline"
+                    >
+                      Back to Login
+                    </button>
+                  </div>
+
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Enter your administrator email address below to receive an official Firebase password reset link.
+                  </p>
+
+                  {forgotSuccess && (
+                    <div className="p-3 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-xs text-emerald-300">
+                      {forgotSuccess}
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Administrator Email Address
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={forgotEmail}
+                      onChange={(e) => setForgotEmail(e.target.value)}
+                      placeholder="Enter administrator email"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-orange-500 focus:outline-none transition"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={forgotSending}
+                    className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow flex items-center justify-center gap-2"
+                  >
+                    {forgotSending ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Sending reset email...</span>
+                      </>
+                    ) : (
+                      <span>Send Password Reset Email</span>
+                    )}
+                  </button>
+                </form>
+              ) : (
+                <form onSubmit={handleLogin} className="space-y-4 bg-slate-800/80 p-6 rounded-2xl border border-slate-700 shadow-xl">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Administrator Email
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
+                      placeholder="Enter administrator email"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-orange-500 focus:outline-none transition"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                        Password
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setForgotEmail(loginEmail);
+                          setShowForgotPass(true);
+                        }}
+                        className="text-[11px] text-orange-400 hover:text-orange-300 hover:underline"
+                      >
+                        Forgot password?
+                      </button>
+                    </div>
+                    <input
+                      type="password"
+                      required
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                      placeholder="Enter administrator password"
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-orange-500 focus:outline-none transition"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loginLoading}
+                    className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    {loginLoading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Verifying Firebase Authentication...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Lock className="w-4 h-4" />
+                        <span>Sign In as Administrator</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
+          ) : !isAdmin ? (
+            /* Authenticated with Firebase, but UID does NOT match VITE_ADMIN_UID */
+            <div className="max-w-md mx-auto py-12 px-4 space-y-6">
+              <div className="bg-slate-900 border border-red-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl text-center">
+                <div className="w-14 h-14 rounded-2xl bg-red-500/20 border border-red-500/30 flex items-center justify-center mx-auto mb-4 text-red-400">
+                  <AlertTriangle className="w-7 h-7" />
+                </div>
+                <h2 className="text-xl font-black text-white font-hindi mb-2">
+                  पहुंच अस्वीकृत (Access Denied)
+                </h2>
+                <p className="text-xs text-slate-300 leading-relaxed mb-5">
+                  Your Firebase account is verified, but its unique User ID (UID) is <strong>not authorized</strong> as the administrator for this portal.
+                </p>
+
+                <div className="bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-left mb-6 space-y-2.5 text-xs">
+                  <div>
+                    <div className="text-slate-400 text-[11px]">Authenticated Account:</div>
+                    <div className="font-mono text-white text-xs break-all mt-0.5">{user.email}</div>
+                  </div>
+                  <div>
+                    <div className="text-slate-400 text-[11px]">Current Firebase UID:</div>
+                    <div className="font-mono text-amber-300 text-[11px] break-all bg-slate-900 px-2 py-1.5 rounded-lg border border-slate-800 mt-1 select-all">
+                      {user.uid}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-slate-400 text-[11px]">Authorized VITE_ADMIN_UID:</div>
+                    <div className="font-mono text-slate-300 text-[11px] break-all bg-slate-900 px-2 py-1 rounded-lg border border-slate-800 mt-0.5">
+                      {CONFIGURED_ADMIN_UID || '(Not configured)'}
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                    placeholder="Enter admin password"
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:border-orange-500 focus:outline-none"
-                  />
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => refreshClaims()}
+                    className="flex-1 py-2.5 px-4 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs transition flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    <span>Re-check Authorization</span>
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition cursor-pointer"
+                  >
+                    Sign Out
+                  </button>
                 </div>
-
-                <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20 text-[11px] text-orange-300">
-                  <p className="font-semibold">Setup / Default Credentials:</p>
-                  <p>Username: <code className="text-white font-mono">admin</code> | Password: <code className="text-white font-mono">abvp@mathura2026</code></p>
-                  <p className="text-slate-400 mt-0.5">(Configurable anytime in <code className="text-slate-300">.env</code> or via environment variables)</p>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loginLoading}
-                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow"
-                >
-                  {loginLoading ? 'Authenticating...' : 'Sign In to Admin Dashboard'}
-                </button>
-              </form>
+              </div>
             </div>
           ) : (
             /* Logged-in Dashboard */

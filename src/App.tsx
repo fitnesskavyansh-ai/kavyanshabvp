@@ -17,6 +17,8 @@ import { MobileBottomBar } from './components/MobileBottomBar';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { PolicyModals } from './components/PolicyModals';
 import { IssueSubmittedPage } from './components/IssueSubmittedPage';
+import { AdminAuthProvider } from './context/AdminAuthContext';
+import { AdminActivityDashboard } from './components/AdminActivityDashboard';
 import { CheckCircle2, AlertCircle, Info } from 'lucide-react';
 
 const ToastNotification: React.FC = () => {
@@ -85,23 +87,36 @@ const MainContent: React.FC = () => {
 
 export default function App() {
   const [currentPath, setCurrentPath] = React.useState(() => window.location.pathname);
+  const [currentHash, setCurrentHash] = React.useState(() => window.location.hash);
 
   React.useEffect(() => {
     const handleLocationChange = () => {
       setCurrentPath(window.location.pathname);
+      setCurrentHash(window.location.hash);
     };
 
     window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
     return () => {
       window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
     };
   }, []);
 
   const isIssueSubmitted = currentPath === '/issue-submitted' || currentPath === '/issue-submitted/';
+  const isAdminRoute = currentPath === '/admin' || currentPath === '/admin/' || currentHash === '#admin';
 
   return (
-    <AppProvider>
-      {isIssueSubmitted ? <IssueSubmittedPage /> : <MainContent />}
-    </AppProvider>
+    <AdminAuthProvider>
+      <AppProvider>
+        {isAdminRoute ? (
+          <AdminActivityDashboard />
+        ) : isIssueSubmitted ? (
+          <IssueSubmittedPage />
+        ) : (
+          <MainContent />
+        )}
+      </AppProvider>
+    </AdminAuthProvider>
   );
 }

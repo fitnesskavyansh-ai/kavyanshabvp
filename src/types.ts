@@ -85,10 +85,16 @@ export type ActivityCategory =
 export interface ActivityItem {
   id: string;
   title: string;
-  category: ActivityCategory;
+  category: ActivityCategory | string;
   date: string;
   location: string;
   description: string;
+  photos: string[];
+  video?: string;
+  published: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  mediaUrls?: string[];
   photoUrl?: string;
   gallery?: string[];
   keyOutcomes?: string[];

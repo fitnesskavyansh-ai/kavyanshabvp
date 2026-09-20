@@ -182,31 +182,41 @@ function sanitize(input: any): string {
     .slice(0, 5000); // enforce max length
 }
 
-// Admin Auth Middleware
-const ADMIN_USER = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASS = process.env.ADMIN_PASSWORD || 'abvp@mathura2026';
+// Admin Auth Token Verification (Firebase ID Token verification matching VITE_ADMIN_UID)
+function checkIsAdminToken(token: string | undefined | null): boolean {
+  if (!token) return false;
+  const adminUid = process.env.VITE_ADMIN_UID || 'i9mqewCLQ0fW7sXAKeoTX68CGF73';
+  try {
+    const parts = token.split('.');
+    if (parts.length === 3) {
+      const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString('utf8'));
+      const now = Math.floor(Date.now() / 1000);
+      if (payload.exp && payload.exp < now) {
+        return false;
+      }
+      const tokenUid = payload.sub || payload.user_id;
+      return Boolean(tokenUid && tokenUid === adminUid);
+    }
+  } catch (err) {
+    return false;
+  }
+  return false;
+}
 
 function requireAdmin(req: Request, res: Response, next: NextFunction): void {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    res.status(401).json({ error: 'Unauthorized: Admin authentication required.' });
+    res.status(401).json({ error: 'Unauthorized: Admin authentication token required.' });
     return;
   }
 
   const token = authHeader.split(' ')[1];
-  const db = readDB();
-  const session = db.sessions[token];
-
-  if (!session || session.expiresAt < Date.now()) {
-    if (session) {
-      delete db.sessions[token];
-      writeDB(db);
-    }
-    res.status(401).json({ error: 'Session expired. Please log in again.' });
+  if (checkIsAdminToken(token)) {
+    next();
     return;
   }
 
-  next();
+  res.status(401).json({ error: 'Unauthorized: Valid admin authentication token required.' });
 }
 
 // ==========================================
@@ -641,35 +651,11 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-// 1. Admin Login
+// 1. Admin Login (Legacy username/password disabled; Firebase Email/Password Auth is the ONLY admin login method)
 app.post('/api/admin/login', (req, res) => {
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required.' });
-  }
-
-  if (username.trim() === ADMIN_USER && password === ADMIN_PASS) {
-    const token = crypto.randomBytes(32).toString('hex');
-    const db = readDB();
-    const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000; // 7 days
-
-    db.sessions[token] = {
-      username: ADMIN_USER,
-      expiresAt,
-    };
-    writeDB(db);
-
-    return res.json({
-      success: true,
-      token,
-      expiresAt,
-      username: ADMIN_USER,
-      role: 'Nagar Mantri Admin',
-    });
-  }
-
-  return res.status(401).json({ error: 'Invalid admin credentials.' });
+  res.status(410).json({
+    error: 'Legacy username/password login has been decommissioned. Please log in using Firebase Email & Password Authentication.',
+  });
 });
 
 // 2. Verify Admin Session
@@ -680,27 +666,12 @@ app.get('/api/admin/verify', (req, res) => {
   }
 
   const token = authHeader.split(' ')[1];
-  const db = readDB();
-  const session = db.sessions[token];
-
-  if (session && session.expiresAt > Date.now()) {
-    return res.json({ authenticated: true, username: session.username });
-  }
-
-  return res.json({ authenticated: false });
+  const isValid = checkIsAdminToken(token);
+  return res.json({ authenticated: isValid });
 });
 
 // 3. Admin Logout
 app.post('/api/admin/logout', (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    const token = authHeader.split(' ')[1];
-    const db = readDB();
-    if (db.sessions[token]) {
-      delete db.sessions[token];
-      writeDB(db);
-    }
-  }
   res.json({ success: true });
 });
 
@@ -1518,9 +1489,7 @@ app.get('/api/gallery', (req, res) => {
   let isAdmin = false;
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1];
-    if (token && db.sessions && db.sessions[token] && db.sessions[token].expiresAt > Date.now()) {
-      isAdmin = true;
-    }
+    isAdmin = checkIsAdminToken(token);
   }
 
   if (isAdmin) {
